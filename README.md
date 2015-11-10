@@ -1,8 +1,21 @@
 # RawSqlBuilder
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/raw_sql_builder`. To experiment with that code, run `bin/console` for an interactive prompt.
+To Use:
+  Pass through a collection or array of objects
 
-TODO: Delete this and the text above, and describe your gem
+Raw Sql Rules:
+  Keys being assigned to can be without quotes or surrounded by double quotes
+  Double quotes are recommended to prevent a column name from being confused
+    with an action. Ex: column name "order"
+  Values being assigned must be surrounded by single quotes
+
+  Hashes:
+    No exterior curly braces
+    A hash within the value of another hash must be surrounded by double quotes
+    Interior hash quotes must be escaped double quotes
+    Interior hash must use : not =>
+
+    Ex: '"main"=>"{\"key\":\"value\"}"'
 
 ## Installation
 
@@ -38,4 +51,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
