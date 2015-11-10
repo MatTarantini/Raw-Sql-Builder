@@ -4,19 +4,17 @@ This gem is to ease the pain of mass creating and updating object attributes in 
 It will adapt to different tables, columns, and column-types.
 Will dramatically speed up mass creates/updates.
 
-Raw Sql Rules:
-  Keys being assigned to can be without quotes or surrounded by double quotes
-  Double quotes are recommended to prevent a column name from being confused
+1. Raw Sql Rules:
+  1. Keys being assigned to can be without quotes or surrounded by double quotes
+  2. Double quotes are recommended to prevent a column name from being confused
     with an action. Ex: column name "order"
-  Values being assigned must be surrounded by single quotes
-
-  Hashes:
-    No exterior curly braces
-    A hash within the value of another hash must be surrounded by double quotes
-    Interior hash quotes must be escaped double quotes
-    Interior hash must use : not =>
-
-    Ex: '"main"=>"{\"key\":\"value\"}"'
+  3. Values being assigned must be surrounded by single quotes
+  4. Hashes:
+    1. No exterior curly braces
+    2. A hash within the value of another hash must be surrounded by double quotes
+    3. Interior hash quotes must be escaped double quotes
+    4. Interior hash must use : not =>
+    5. Ex: '"main"=>"{\"key\":\"value\"}"'
 
 ## Installation
 
