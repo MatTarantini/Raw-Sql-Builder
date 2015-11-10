@@ -245,7 +245,6 @@ module RawSqlBuilder
 
   def type_formatting(value)
     @type = 'json' if @type == 'text' && (value.is_a?(Hash) || value.is_a?(Array))
-    # @type = 'json' if @type == 'text' && (value.is_a?(Hash) || (value.to_s.include?('=>') && value.to_s.include?('{')))
 
     if @type == 'text[]'
       value = value.flatten.uniq.to_s if value.is_a?(Array)
