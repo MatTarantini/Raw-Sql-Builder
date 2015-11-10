@@ -1,7 +1,8 @@
 # RawSqlBuilder
 
-To Use:
-  Pass through a collection or array of objects
+This gem is to ease the pain of mass creating and updating object attributes in your database.
+It will adapt to different tables, columns, and column-types.
+Will dramatically speed up mass creates/updates.
 
 Raw Sql Rules:
   Keys being assigned to can be without quotes or surrounded by double quotes
@@ -35,7 +36,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Pass through a collection or array of objects
+
+Creating:
+  Use the method 'new' to create new objects without saving them to the database.
+  Once all objects have attributes assigned pass them through to this gem to be created.
+  
+Updating:
+  Assign attributes to objects, I prefer using the method 'assign_attributes.'
+  Once all attributes are assigned for all objects pass them through to this gem for updating.
 
 ## Development
 
