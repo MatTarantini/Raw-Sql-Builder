@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'raw_sql_builder/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "raw-sql-builder"
+  spec.name          = "raw_sql_builder"
   spec.version       = RawSqlBuilder::VERSION
   spec.authors       = ["Matias Tarantini"]
   spec.email         = ["MatTarantini@gmail.com"]
