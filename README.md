@@ -34,20 +34,22 @@ Or install it yourself as:
 
 ## Usage
 
-Pass through a collection or array of objects.
+Pass through a collection or array of objects to one of the methods below.
 Will also accept a single object.
 
 - Creating:
   - Use the method 'new' to create new objects without saving them to the database.
-  - Once all objects have attributes assigned pass them through to this gem to be created.
+  - Once all objects have attributes assigned, pass them through to mass_create or
+    mass_create_or_update to be created.
   
 - Updating:
   - Assign attributes to objects, I prefer using the method 'assign_attributes.'
-  - Once all attributes are assigned for all objects pass them through to this gem for updating.
+  - Once all attributes are assigned for all objects pass them through to mass_update or
+    mass_create_or_update for updating.
   
 - Methods:
   - mass_create(objects)
-    - This will only do a creation query and include objects that return true on new_record?
+    - This will only do a creation query and include objects that return true on 'new_record?'
     - Any existing objects that have updated attributes and were passed through will be ignored.
   - mass_update(objects)
     - Will only update existing objects and ignore new objects.
