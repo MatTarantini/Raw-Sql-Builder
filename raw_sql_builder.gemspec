@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Creates Raw SQL mass creates and updates.'
   spec.description   = 'This gem is meant to speed up large creations or updates of objects.'
-  spec.homepage      = 'https://github.com/MatTarantini/raw-sql-builder'
+  spec.homepage      = 'https://github.com/MatTarantini/raw_sql_builder'
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+  spec.required_ruby_version = '>= 2.0'
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
