@@ -2,9 +2,9 @@
 
 This gem is to ease the pain of mass creating and updating object attributes in your database.
 It will adapt to different tables, columns, and column-types.
-Will dramatically speed up mass creates and updates.
+Dramatically speeds up the creating or updating of large groups of objects.
 
-Loops through all objects passed through and will create raw SQL mass create or update queries.
+Loops through all objects passed and will build/execute raw SQL mass create or update queries.
 
 ## Installation
 
