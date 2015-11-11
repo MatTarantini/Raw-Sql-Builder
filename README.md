@@ -49,19 +49,19 @@ Will also accept a single object.
     - Will execute the query you pass through.
     
 - Examples:
-  - ```ruby
+  ```ruby
     users = []
     users << User.new(first_name: 'Matias', last_name: 'Tarantini', active: true)
     users << User.new(first_name: 'David', last_name: 'Tarantini', active: false)
     users << User.new(first_name: 'Steve', last_name: 'Tarantini', active: false)
     RawSqlBuilder.mass_create(users)
-    ```
-  - ```ruby
+  ```
+  ```ruby
     users = User.where.not(active: true)
     users.each { |u| u.assign_attributes(active: true) }
     RawSqlBuilder.mass_update(users)
-    ```
-  - ```ruby
+  ```
+  ```ruby
     users = []
     users << User.new(first_name: 'Paul', last_name: 'Tarantini', active: true)
     users << User.new(first_name: 'Sam', last_name: 'Tarantini', active: true)
@@ -69,7 +69,7 @@ Will also accept a single object.
     user.first_name = 'Dave'
     users << user
     RawSqlBuilder.mass_create_or_update(users)
-    ```
+  ```
 
 ## Development
 
