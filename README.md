@@ -6,6 +6,8 @@ Dramatically speeds up the creating or updating of large groups of objects.
 
 Loops through all objects passed and will build/execute raw SQL mass create or update queries.
 
+This was made for use with Postgres. I do not know, nor have I tested with any other database type.
+
 ## Installation
 
 Add this line to your application's Gemfile:
