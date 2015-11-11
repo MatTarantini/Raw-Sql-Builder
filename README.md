@@ -6,7 +6,7 @@ Dramatically speeds up the creating or updating of large groups of objects.
 
 Loops through all objects passed and will build/execute raw SQL mass create or update queries.
 
-This was made for use with Postgres. I do not know, nor have I tested with any other database type.
+This was made for use with Postgres. I haven't tested this with any other database type.
 
 ## Installation
 
