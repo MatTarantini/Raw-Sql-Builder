@@ -1,7 +1,6 @@
 # RawSqlBuilder
 
 [![Gem Version](https://badge.fury.io/rb/raw_sql_builder.svg)](https://badge.fury.io/rb/raw_sql_builder)
-[![Downloads](https://img.shields.io/github/downloads/atom/atom/latest/total.svg)](https://github.com/MatTarantini/raw_sql_builder)
 
 This gem is to ease the pain of mass creating and updating object attributes in your database.
 It will adapt to different tables, columns, and column-types.
