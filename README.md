@@ -1,5 +1,8 @@
 # RawSqlBuilder
 
+[![Gem Version](https://badge.fury.io/rb/raw_sql_builder.svg)](https://badge.fury.io/rb/raw_sql_builder)
+[![Downloads](https://img.shields.io/github/downloads/atom/atom/latest/total.svg)](https://github.com/MatTarantini/raw_sql_builder)
+
 This gem is to ease the pain of mass creating and updating object attributes in your database.
 It will adapt to different tables, columns, and column-types.
 Dramatically speeds up the creating or updating of large groups of objects.
@@ -43,35 +46,41 @@ Will also accept a single object.
   - mass_create(objects)
     - This will only do a creation query and include objects that return true on 'new_record?'
     - Any existing objects that have updated attributes and were passed through will be ignored.
+    - Example:
+      ```ruby
+        users = []
+        users << User.new(first_name: 'Matias', last_name: 'Tarantini', active: true)
+        users << User.new(first_name: 'David', last_name: 'Tarantini', active: false)
+        users << User.new(first_name: 'Steve', last_name: 'Tarantini', active: false)
+        RawSqlBuilder.mass_create(users)
+      ```
   - mass_update(objects)
     - Will only update existing objects and ignore new objects.
+    - Example:
+      ```ruby
+        users = User.where.not(active: true)
+        users.each { |u| u.assign_attributes(active: true) }
+        RawSqlBuilder.mass_update(users)
+      ```
   - mass_create_or_update(objects)
     - Will separate new objects and updated objects, then run respective queries.
+    - Example:
+      ```ruby
+        users = []
+        users << User.new(first_name: 'Paul', last_name: 'Tarantini', active: true)
+        users << User.new(first_name: 'Sam', last_name: 'Tarantini', active: true)
+        user = User.find_by(first_name: 'David', last_name: 'Tarantini')
+        user.first_name = 'Dave'
+        users << user
+        RawSqlBuilder.mass_create_or_update(users)
+      ```
   - execute(query)
     - Will execute the query you pass through.
-    
-- Examples:
-  ```ruby
-    users = []
-    users << User.new(first_name: 'Matias', last_name: 'Tarantini', active: true)
-    users << User.new(first_name: 'David', last_name: 'Tarantini', active: false)
-    users << User.new(first_name: 'Steve', last_name: 'Tarantini', active: false)
-    RawSqlBuilder.mass_create(users)
-  ```
-  ```ruby
-    users = User.where.not(active: true)
-    users.each { |u| u.assign_attributes(active: true) }
-    RawSqlBuilder.mass_update(users)
-  ```
-  ```ruby
-    users = []
-    users << User.new(first_name: 'Paul', last_name: 'Tarantini', active: true)
-    users << User.new(first_name: 'Sam', last_name: 'Tarantini', active: true)
-    user = User.find_by(first_name: 'David', last_name: 'Tarantini')
-    user.first_name = 'Dave'
-    users << user
-    RawSqlBuilder.mass_create_or_update(users)
-  ```
+    - Example:
+      ```ruby
+        query = "UPDATE users SET active = 'true' WHERE users.id = 3;"
+        RawSqlBuilder.execute(query)
+      ```
 
 ## Development
 
