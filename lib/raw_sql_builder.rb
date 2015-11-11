@@ -77,6 +77,7 @@ module RawSqlBuilder
 
     ### Run methods sub-methods
 
+    # Set the globals that other methods will require
     def setup_globals(objects)
       @object_class = objects.first.class
       @table_name = get_table_name(@object_class.name)
@@ -84,6 +85,7 @@ module RawSqlBuilder
       @creates, @updates, @updates_hash, @update_exceptions_hash = [], [], [], []
     end
 
+    # Sort the objects into 'being created' or 'being updated'
     def organize_objects(objects, type)
       objects.each do |o|
         next if o.blank?
@@ -101,6 +103,9 @@ module RawSqlBuilder
       end
     end
 
+    # Updates only really need the object id and column changes.
+    # Putting some objects into 'update_exceptions' if we are actually
+    # wanting to update an attribute to NULL.
     def organize_updates(object, filtered_changes)
       check_changes = filtered_changes.values.map { |v| true if v.blank? }.compact
 
@@ -129,12 +134,14 @@ module RawSqlBuilder
 
     ### Getting create/update queries
 
+    # Prepare the Create raw SQL query.
     def get_create_query
       keys_string = (@columns_hash.keys - ['id']).join('", "')
       values_string = create_values_string
       create_query(keys_string, values_string)
     end
 
+    # Prepare the Update raw SQL query.
     def get_update_query
       changed_columns = @updates_hash.map { |c| c.values.map(&:keys) }.flatten.uniq
       columns_info = @columns_hash.slice(*(['id'] + changed_columns))
@@ -143,6 +150,7 @@ module RawSqlBuilder
       update_query(*get_update_arrays(columns_info))
     end
 
+    # Prepare separate Update queries for exceptions.
     def get_update_exception_queries
       @update_exceptions_hash.map do |exception|
         update_exception_query(exception)
@@ -151,10 +159,13 @@ module RawSqlBuilder
 
     ### Create sub-methods
 
+    # Join values into a string prepped for the query.
     def create_values_string
       create_values.map { |v| v.join(', ') }.join('), (')
     end
 
+    # Loop through objects and attributes to get formatted object values.
+    # All values for each object will be grouped together.
     def create_values
       @creates.map do |o|
         o.attributes.except('id').map do |k, v|
@@ -164,12 +175,15 @@ module RawSqlBuilder
       end
     end
 
+    # Put strings together to get the Create query.
     def create_query(keys_string, values_string)
       "INSERT INTO #{@table_name} (\"#{keys_string}\") VALUES (#{values_string}) RETURNING id;"
     end
 
     ### Update sub-methods
 
+    # Loop through each column and prepare keys/values.
+    # For the Update query, values are all grouped by column.
     def get_update_arrays(columns_info)
       keys_array = []
       values_array = []
@@ -182,10 +196,12 @@ module RawSqlBuilder
       [keys_array, values_array]
     end
 
+    # Put array of all values for one column into a string.
     def update_values_string
       "unnest(array[#{update_values}])#{"::#{@type}"} as #{@column}"
     end
 
+    # Get values joined and ready for the string.
     def update_values
       if @column == 'id'
         @updates_hash.map(&:keys)
@@ -194,6 +210,7 @@ module RawSqlBuilder
       end
     end
 
+    # Loop through updates and grab formatted values.
     def update_array
       @updates_hash.map do |c|
         c.values.map do |v|
@@ -202,10 +219,12 @@ module RawSqlBuilder
       end
     end
 
+    # Get string for each column that will be updated.
     def update_keys_string
       "\"#{@column}\" = COALESCE(source.#{@column}::#{@type}, #{@table_name}.#{@column}::#{@type})"
     end
 
+    # Get final Update query ready.
     def update_query(keys_array, values_array)
       "UPDATE #{@table_name} SET #{keys_array.join(', ')} FROM
     ( SELECT #{values_array.join(', ')}) as source WHERE #{@table_name}.id = source.id;"
@@ -213,6 +232,7 @@ module RawSqlBuilder
 
     ### Update Exception sub-methods
 
+    # Get exception keys and values.
     def update_exception_values_array(exception)
       exception.values.map do |hash|
         hash.map do |k, v|
@@ -222,6 +242,7 @@ module RawSqlBuilder
       end
     end
 
+    # Prep final exception Update query.
     def update_exception_query(exception)
       "UPDATE #{@table_name} SET #{update_exception_values_array(exception).join(', ')}
     WHERE #{@table_name}.id = #{exception.keys.first};"
@@ -229,6 +250,8 @@ module RawSqlBuilder
 
     ### Helper methods
 
+    # Make absolute sure that the columns shown by 'changed?' have actually
+    # been changed and need to be updated. I came across this issue before.
     def filter_changes(changes)
       return {} unless changes.size > 0
       filtered_changes = {}
@@ -248,6 +271,8 @@ module RawSqlBuilder
       @updates_hash.size + @update_exceptions_hash.size
     end
 
+    # Initial filter for value formatting.
+    # Checking for present and false here since false would not return true for 'present?'
     def format_value(value, default = 'NULL')
       if value.present? || value == false
         "'#{type_formatting(value)}'"
@@ -256,6 +281,10 @@ module RawSqlBuilder
       end
     end
 
+    # The heart of formatting.
+    # This method is highly delicate and complex. It has come about from
+    # extensive testing and works very well, even when columns have been
+    # created incorrectly or have incorrect values assigned to them.
     def type_formatting(value)
       @type = 'json' if @type == 'text' && (value.is_a?(Hash) || value.is_a?(Array))
 
@@ -272,6 +301,7 @@ module RawSqlBuilder
       value.to_s.gsub("'nil'", "'null'").gsub("'", "''").gsub("''''", "''")
     end
 
+    # Convert Rails column type to Postgres column type.
     def convert_type(attributes)
       if attributes.type == :text
         return 'text[]' if attributes.array
