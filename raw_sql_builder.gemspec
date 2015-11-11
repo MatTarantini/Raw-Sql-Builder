@@ -9,8 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Matias Tarantini"]
   spec.email         = ["MatTarantini@gmail.com"]
 
-  spec.summary       = 'Creates Raw SQL mass creates and updates.'
-  spec.description   = 'This gem is meant to speed up large creations or updates of objects.'
+  spec.summary       = 'Builds Raw SQL mass create and update queries.'
+  spec.description   = 'This gem is meant to speed up large creates or updates of objects
+                        by building mass raw SQL queries.'
   spec.homepage      = 'https://github.com/MatTarantini/raw_sql_builder'
   spec.license       = "MIT"
 
