@@ -44,13 +44,13 @@ Will also accept a single object.
     - This will only do a creation query and include objects that return true on 'new_record?'
     - Any existing objects that have updated attributes and were passed through will be ignored.
     - Example:
-      ```ruby
-        users = []
-        users << User.new(first_name: 'Matias', last_name: 'Tarantini', active: true)
-        users << User.new(first_name: 'David', last_name: 'Tarantini', active: false)
-        users << User.new(first_name: 'Steve', last_name: 'Tarantini', active: false)
-        RawSqlBuilder.mass_create(users)
-      ```
+    ```ruby
+      users = []
+      users << User.new(first_name: 'Matias', last_name: 'Tarantini', active: true)
+      users << User.new(first_name: 'David', last_name: 'Tarantini', active: false)
+      users << User.new(first_name: 'Steve', last_name: 'Tarantini', active: false)
+      RawSqlBuilder.mass_create(users)
+    ```
   - mass_update(objects)
     - Will only update existing objects and ignore new objects.
     - Example:
