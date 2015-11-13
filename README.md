@@ -54,30 +54,30 @@ Will also accept a single object.
   - mass_update(objects)
     - Will only update existing objects and ignore new objects.
     - Example:
-      ```ruby
-        users = User.where.not(active: true)
-        users.each { |u| u.assign_attributes(active: true) }
-        RawSqlBuilder.mass_update(users)
-      ```
+    ```ruby
+      users = User.where.not(active: true)
+      users.each { |u| u.assign_attributes(active: true) }
+      RawSqlBuilder.mass_update(users)
+    ```
   - mass_create_or_update(objects)
     - Will separate new objects and updated objects, then run respective queries.
     - Example:
-      ```ruby
-        users = []
-        users << User.new(first_name: 'Paul', last_name: 'Tarantini', active: true)
-        users << User.new(first_name: 'Sam', last_name: 'Tarantini', active: true)
-        user = User.find_by(first_name: 'David', last_name: 'Tarantini')
-        user.first_name = 'Dave'
-        users << user
-        RawSqlBuilder.mass_create_or_update(users)
-      ```
+    ```ruby
+      users = []
+      users << User.new(first_name: 'Paul', last_name: 'Tarantini', active: true)
+      users << User.new(first_name: 'Sam', last_name: 'Tarantini', active: true)
+      user = User.find_by(first_name: 'David', last_name: 'Tarantini')
+      user.first_name = 'Dave'
+      users << user
+      RawSqlBuilder.mass_create_or_update(users)
+    ```
   - execute(query)
     - Will execute the query you pass through.
     - Example:
-      ```ruby
-        query = "UPDATE users SET active = 'true' WHERE users.id = 3;"
-        RawSqlBuilder.execute(query)
-      ```
+    ```ruby
+      query = "UPDATE users SET active = 'true' WHERE users.id = 3;"
+      RawSqlBuilder.execute(query)
+    ```
 
 ## Development
 
