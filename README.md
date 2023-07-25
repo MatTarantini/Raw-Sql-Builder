@@ -46,9 +46,9 @@ Will also accept a single object.
     - Example:
     ```ruby
       users = []
-      users << User.new(first_name: 'Matias', last_name: 'Tarantini', active: true)
-      users << User.new(first_name: 'David', last_name: 'Tarantini', active: false)
-      users << User.new(first_name: 'Steve', last_name: 'Tarantini', active: false)
+      users << User.new(first_name: 'Saige', last_name: 'Fuentes', active: true)
+      users << User.new(first_name: 'Bowen', last_name: 'Higgins', active: false)
+      users << User.new(first_name: 'Leighton', last_name: 'Kramer', active: false)
       RawSqlBuilder.mass_create(users)
     ```
   - mass_update(objects)
@@ -64,10 +64,10 @@ Will also accept a single object.
     - Example:
     ```ruby
       users = []
-      users << User.new(first_name: 'Paul', last_name: 'Tarantini', active: true)
-      users << User.new(first_name: 'Sam', last_name: 'Tarantini', active: true)
-      user = User.find_by(first_name: 'David', last_name: 'Tarantini')
-      user.first_name = 'Dave'
+      users << User.new(first_name: 'Kylan', last_name: 'Gentry', active: true)
+      users << User.new(first_name: 'Franklin', last_name: 'Sierra', active: true)
+      user = User.find_by(first_name: 'Bowen', last_name: 'Higgins')
+      user.first_name = 'Bow'
       users << user
       RawSqlBuilder.mass_create_or_update(users)
     ```
